@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class util {
 
+    // LIMPA O TERMINAL
     public static void clearTermnal() {
 
         ProcessBuilder pB;
@@ -19,26 +20,45 @@ public class util {
         }
     }
 
+    // PAUSA O FLUXO ATE O ENTER SER PRESSIONADO
     public static void pressEnter(Scanner scan) {
-        System.out.println("\nPressione ENTER para voltar ao menu...");
+        System.out.print("\nPressione \033[1mENTER\033[0m para voltar ao menu...");
         scan.nextLine();
     }
 
-    public static boolean hasNum(String txt) {
-        return txt.matches(".*\\d.*");
+    // VERIFICA SE HA ESPACOS INVALIDOS OU É VAZIO
+    public static boolean hasInvalidSpace(String texto) {
+        return texto.isEmpty() || !texto.matches("^\\S.*\\S$");
     }
 
-    public static void fixerror(String erro) {
-        System.out.print("\033[1A");
-        System.out.print("\033[K");
-        System.out.print("\033[2B");
-        System.out.println("ERRO! " + erro);
-        System.out.print("\033[3A");
+    // EXIBE UM TEXTO EM NEGRITO
+    public static void printBold(Object texto) {
+        System.out.print("\033[1m" + texto + "\033[0m");
     }
 
+    // VERIFICA SE HÁ NUMEROS NA STRING
+    public static boolean hasNum(String texto) {
+        return texto.matches(".*\\d.*");
+    }
+
+    // VERIFICA SE O NUMERO É UM INTEIRO SEM ESPACOS
+    public static boolean isValidInt(String numero) {
+        return numero.matches("^\\d+$");
+    }
+
+    // EXIBE MENSAGEM DE ERRO E POSSIBILITA A CORRECAO DE INPUT
+    public static void fixError(String msgErro) {
+        System.out.print("\033[1A"); // Sobe para o pedido de input
+        System.out.print("\033[K"); // apaga o input
+        System.out.print("\033[2B"); // desce 2 linhas
+        System.out.println("\033[1mERRO!\033[0m " + msgErro); // exibe o erro
+        System.out.print("\033[3A"); // volta para a linha de input
+    }
+
+    // APAGA A MSG DE ERRO DO FIXERROR
     public static void fixedError() {
-        System.out.print("\033[1B");
-        System.out.print("\033[K");
-        System.out.print("\033[1A");
+        System.out.print("\033[1B"); // desce para a linha de erro
+        System.out.print("\033[K"); // apaga a mensagem
+        System.out.print("\033[1A"); // volta para a linha correta
     }
 }
