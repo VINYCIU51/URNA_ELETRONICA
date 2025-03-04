@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Eleicao {
     private boolean ativa;
-    private LocalTime horarioTermino;
+    private LocalTime horarioTermino = null;
 
     public Eleicao() {
         this.ativa = false;
@@ -24,6 +24,10 @@ public class Eleicao {
     // DEFINE UM HORARIO PARA O TERMINO DA VOTACAO
     public void definirHorarioTermino(String horario) {
         horarioTermino = LocalTime.parse(horario, DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
+    public LocalTime getHorarioTermino() {
+        return horarioTermino;
     }
 
     // VERIFICA SE A VOTACAO ESTA ATIVA OU NAO

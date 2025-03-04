@@ -39,6 +39,10 @@ public class Votacao {
         }
     }
 
+    public void setLimiteVotos(int limite) {
+        this.limiteVotos = limite;
+    }
+
     public int getBranco() {
         return votoBranco;
     }
@@ -53,6 +57,10 @@ public class Votacao {
 
     public int getVotosTotais() {
         return votosTotais;
+    }
+
+    public int getLimiteVotos() {
+        return limiteVotos;
     }
 
     @Override

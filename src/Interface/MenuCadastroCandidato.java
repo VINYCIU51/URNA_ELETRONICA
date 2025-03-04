@@ -9,7 +9,7 @@ public class MenuCadastroCandidato {
     public MenuCadastroCandidato(Scanner scan, ListaCandidatos candidatos) {
         util.clearTermnal();
 
-        System.out.println("===== Cadastro de candidatos =====\n");
+        System.out.println("===== CADASTRO DE CANDIDATOS =====\n");
 
         // PEDIDO DE NOME
         String nome;
@@ -73,7 +73,6 @@ public class MenuCadastroCandidato {
             String strNum = scan.nextLine();
 
             if (!util.isValidInt(strNum)) {
-                util.fixedError();
                 util.fixError("Apenas números");
                 continue;
             }
@@ -81,11 +80,9 @@ public class MenuCadastroCandidato {
             numero = Integer.parseInt(strNum);
 
             if (numero <= 0) {
-                util.fixedError();
                 util.fixError("Apenas números positivos");
 
             } else if (candidatos.getList().containsKey(numero)) {
-                util.fixedError();
                 util.fixError("Número já cadastrado");
 
             } else {
@@ -99,5 +96,6 @@ public class MenuCadastroCandidato {
         candidatos.add(candidato);
         util.printBold("\nCadastro efetuado com sucesso!");
         util.pressEnter(scan);
+        util.clearTermnal();
     }
 }

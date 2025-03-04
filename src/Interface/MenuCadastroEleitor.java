@@ -9,7 +9,7 @@ public class MenuCadastroEleitor {
     public MenuCadastroEleitor(Scanner scan, ListaEleitores eleitores) {
         util.clearTermnal();
 
-        System.out.println("===== Cadastro de eleitores =====\n");
+        System.out.println("===== CADASTRO DE ELEITORES =====\n");
 
         // PEDIDO DE NOME
         String nome;
@@ -36,7 +36,6 @@ public class MenuCadastroEleitor {
             String strIdade = scan.nextLine();
 
             if (!util.isValidInt(strIdade)) {
-                util.fixedError();
                 util.fixError("Digite apenas números");
                 continue;
             }
@@ -44,7 +43,6 @@ public class MenuCadastroEleitor {
             idade = Integer.parseInt(strIdade);
 
             if (idade < 16 || idade > 120) {
-                util.fixedError();
                 util.fixError("Idade inválida");
             } else {
                 util.fixedError();
@@ -59,13 +57,11 @@ public class MenuCadastroEleitor {
             cpf = scan.nextLine();
 
             if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}")) {
-                util.fixedError();
                 util.fixError("Digite no formato 000.000.000-00");
                 continue;
             }
 
             if (eleitores.getList().containsKey(cpf)) {
-                util.fixedError();
                 util.fixError("CPF já cadastrado");
             } else {
                 util.fixedError();
@@ -74,10 +70,25 @@ public class MenuCadastroEleitor {
 
         }
 
+        String senha;
+        while (true) {
+            util.printBold("SENHA: ");
+            senha = scan.nextLine();
+
+            if (util.hasInvalidSpace(senha)) {
+                util.fixError("Uso inválido de espacos vazios");
+                continue;
+            }
+            util.fixedError();
+            break;
+
+        }
+
         // CRIACAO E ADIÇÃO A LISTA
-        Eleitor eleitor = new Eleitor(nome, idade, cpf);
+        Eleitor eleitor = new Eleitor(nome, idade, cpf, senha);
         eleitores.add(eleitor);
         util.printBold("\nCadastro efetuado com sucesso!");
         util.pressEnter(scan);
+        util.clearTermnal();
     }
 }

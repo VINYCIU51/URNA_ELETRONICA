@@ -20,6 +20,13 @@ public class util {
         }
     }
 
+    public static void clearRange(int range, String direction) {
+        for (int i = 0; i < range; i++) {
+            System.out.print("\033[K");
+            System.out.print("\033[" + range + direction.toUpperCase());
+        }
+    }
+
     // PAUSA O FLUXO ATE O ENTER SER PRESSIONADO
     public static void pressEnter(Scanner scan) {
         System.out.print("\nPressione \033[1mENTER\033[0m para voltar ao menu...");
@@ -48,6 +55,7 @@ public class util {
 
     // EXIBE MENSAGEM DE ERRO E POSSIBILITA A CORRECAO DE INPUT
     public static void fixError(String msgErro) {
+        fixedError();
         System.out.print("\033[1A"); // Sobe para o pedido de input
         System.out.print("\033[K"); // apaga o input
         System.out.print("\033[2B"); // desce 2 linhas
@@ -60,5 +68,13 @@ public class util {
         System.out.print("\033[1B"); // desce para a linha de erro
         System.out.print("\033[K"); // apaga a mensagem
         System.out.print("\033[1A"); // volta para a linha correta
+    }
+
+    // MOVE O CURSOR E REALLIZA A ACAO ESPECIFICADA
+    public static void controlTerminal(String... acoes) {
+        for (String acao : acoes) {
+            System.out.print("\033[" + acao.toUpperCase());
+        }
+
     }
 }

@@ -5,11 +5,13 @@ public class Eleitor {
     private int idade;
     private String cpf;
     private boolean jaVotou = false;
+    private String senha;
 
-    public Eleitor(String nome, int idade, String cpf) {
+    public Eleitor(String nome, int idade, String cpf, String senha) {
         this.nome = nome;
         this.idade = idade;
         this.cpf = cpf;
+        this.senha = senha;
     }
 
     public String getNome() {
@@ -26,6 +28,10 @@ public class Eleitor {
 
     public boolean getJaVotou() {
         return this.jaVotou;
+    }
+
+    public String getSenha() {
+        return this.senha;
     }
 
     public void setJaVotou() {
