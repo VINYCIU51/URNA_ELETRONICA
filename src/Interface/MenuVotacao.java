@@ -18,72 +18,79 @@ public class MenuVotacao {
 
         util.clearTerminal();
 
-        for (Candidato c : candidatos.getList().values()) {
+        for (Candidato c : candidatos.getList().values()) { // lista de cargos inseridos
             cargosDisponiveis.add(c.getCargo());
         }
 
         for (String cargoAtual : cargosDisponiveis) {
             util.clearTerminal();
-            if (cargosVotados.contains(cargoAtual)) {
+            if (cargosVotados.contains(cargoAtual)) { // verifica se o cargo ja foi votado
                 continue;
             }
 
-            while (true) {
-                System.out.println("VOTAÇÃO PARA " + cargoAtual.toUpperCase() + "\n"); // CABECALHO DA ABA VOTACAO
+            // CABECALHO DA ABA VOTACAO
+            System.out.println("VOTAÇÃO PARA " + cargoAtual.toUpperCase() + "\n");
+            System.out.print("[-1] - Votar Nulo\n[-2] - Votar Branco\n");
 
+            while (true) {
                 // PEDIDO DO NUMERO DE VOTO
-                System.out.print("[-1] - Votar Nulo\n[-2] - Votar Branco\n");
                 System.out.print("Informe o número de seu candidato: ");
                 String strNumero = scan.nextLine();
 
-                if (!strNumero.equals("-1") && !strNumero.equals("-0") && !util.isValidInt(strNumero)) {
+                if (!strNumero.equals("-1") && !strNumero.equals("-2") && !util.isValidInt(strNumero)) {
                     util.fixError("Entrada inválida");
-                    util.clearRange(10, "a");
                     continue;
                 }
 
                 util.fixedError();
                 int numero = Integer.parseInt(strNumero);
 
-                // BLOCO PARA CONFIRMAR VOTO NULO OU BRANCO
-                if (numero == -1 || numero == -2) {
-                    String tipoVoto = (numero == -1) ? "nulo" : "branco";
+                // BLOCO PARA VOTAR BRANCO, NULO OU EM UM CANDIDATO
+                String tipoVoto;
+                Candidato candidato = null;
 
-                    System.out.print("Confirmar voto " + tipoVoto + "? [s/n]: ");
-                    String confirm = scan.nextLine();
+                if (numero == -1 || numero == -2) { // verificacao para voto nulo ou branco
+                    tipoVoto = (numero == -1) ? "nulo" : "branco";
 
-                    if (confirm.equalsIgnoreCase("s")) {
-                        votacao.contabilizarVoto(tipoVoto);
-                        eleitor.setJaVotou();
-                        cargosVotados.add(cargoAtual);
-                        break;
-                    }
-
-                    // BLOCO PARA CONFIRMAR VOTO EM UM CANDIDATO
                 } else {
-                    Candidato candidato = candidatos.buscar(numero);
+                    candidato = candidatos.buscar(numero);
 
                     if (candidato == null || !candidato.getCargo().equalsIgnoreCase(cargoAtual)) {
                         util.fixError("Candidato não encontrado para este cargo");
-                        util.clearRange(10, "a");
                         continue;
                     }
 
-                    System.out.print("Confirmar voto em " + candidato.getNome() + "? [s/n]: ");
-                    String confirm = scan.nextLine();
+                    tipoVoto = "valido";
+                }
 
-                    if (confirm.equalsIgnoreCase("s")) {
-                        candidato.addVoto();
-                        votacao.contabilizarVoto("valido");
+                boolean votoConfirmado = false;
+                while (!votoConfirmado) {
+                    //@formatter:off
+                    System.out.print("Confirmar voto " + (tipoVoto.equalsIgnoreCase("valido") ? ("em " + candidato.getNome()) : tipoVoto) + "? [s/n]: ");
+                    //@formatter:on
+
+                    String confirmacao = scan.nextLine();
+                    if (confirmacao.equalsIgnoreCase("s")) { // caso confirme voto, encerra processo todo
                         eleitor.setJaVotou();
                         cargosVotados.add(cargoAtual);
+                        votoConfirmado = true;
+
+                    } else if (confirmacao.equalsIgnoreCase("n")) { // sai do loop de confirm e volta para o principal
+                        util.clearRange(2, "a");
                         break;
+
+                    } else {
+                        util.fixError("Entrada inválida. digite 's' para confirmar ou 'n' para cancelar"); // repete
                     }
                 }
-                util.clearTerminal();
+
+                if (votoConfirmado) { // caso confirmado, passa para proximo cargo
+                    break;
+                }
             }
         }
 
         util.pressEnter(scan);
+        util.clearTerminal();
     }
 }

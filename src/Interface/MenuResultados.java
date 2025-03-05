@@ -8,7 +8,7 @@ import votacao.Votacao;
 public class MenuResultados {
 
     public MenuResultados(Scanner scan, Votacao votacao) {
-        util.clearTermnal();
+        util.clearTerminal();
         System.out.println("========== RESULTADOS ===========\n");
         System.out.println(votacao.toString());
 

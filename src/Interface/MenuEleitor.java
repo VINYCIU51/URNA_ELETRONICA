@@ -11,7 +11,7 @@ public class MenuEleitor {
     // @formatter:off
     public MenuEleitor(Scanner scan, Eleitor eleitor, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao, Votacao votacao) {
 
-        util.clearTermnal();
+        util.clearTerminal();
         while (true) {
             
             System.out.println("======== MENU ========\n");
@@ -33,7 +33,13 @@ public class MenuEleitor {
 
                 case 1 -> {
                     if (eleitor.getJaVotou()) {
-                        System.out.println("ERRO! Você só pode votar uma vez");
+                        util.fixError("ERRO! Você não pode votar duas vezes");
+                        util.clearRange(10, "a");
+                        continue;
+                    } else if (candidatos.getList().isEmpty() || !eleicao.isAtiva()) {
+                        util.fixError("Eleição desativada ou sem candidatos cadastrados até o momento");
+                        util.clearRange(10, "a");
+                        continue;
                     } else {
                         new MenuVotacao(scan, eleitor, candidatos, votacao, eleicao);
                     }

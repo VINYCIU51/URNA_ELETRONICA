@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class util {
 
     // LIMPA O TERMINAL
-    public static void clearTermnal() {
+    public static void clearTerminal() {
 
         ProcessBuilder pB;
 
@@ -22,8 +22,15 @@ public class util {
 
     public static void clearRange(int range, String direction) {
         for (int i = 0; i < range; i++) {
-            System.out.print("\033[K");
-            System.out.print("\033[" + range + direction.toUpperCase());
+            System.out.print("\033[K"); // Limpa a linha atual
+
+            if (direction.equalsIgnoreCase("a")) {
+                System.out.print("\033[A"); // Move para cima
+
+            } else if (direction.equalsIgnoreCase("b")) {
+                System.out.print("\033[B"); // Move para baixo
+            }
+            System.out.print("\033[K"); // Limpa a linha novamente
         }
     }
 

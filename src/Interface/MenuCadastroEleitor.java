@@ -7,7 +7,7 @@ import usuarios.Eleitor;
 public class MenuCadastroEleitor {
 
     public MenuCadastroEleitor(Scanner scan, ListaEleitores eleitores) {
-        util.clearTermnal();
+        util.clearTerminal();
 
         System.out.println("===== CADASTRO DE ELEITORES =====\n");
 
@@ -19,10 +19,10 @@ public class MenuCadastroEleitor {
 
             if (util.hasInvalidSpace(nome)) {
                 util.fixError("Uso inválido de espacos vazios");
-                continue;
-            }
-            if (util.hasNum(nome)) {
+
+            } else if (util.hasNum(nome)) {
                 util.fixError("Digite apenas letras");
+
             } else {
                 util.fixedError();
                 break;
@@ -44,6 +44,7 @@ public class MenuCadastroEleitor {
 
             if (idade < 16 || idade > 120) {
                 util.fixError("Idade inválida");
+
             } else {
                 util.fixedError();
                 break;
@@ -58,11 +59,10 @@ public class MenuCadastroEleitor {
 
             if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}")) {
                 util.fixError("Digite no formato 000.000.000-00");
-                continue;
-            }
 
-            if (eleitores.getList().containsKey(cpf)) {
+            } else if (eleitores.getList().containsKey(cpf)) {
                 util.fixError("CPF já cadastrado");
+
             } else {
                 util.fixedError();
                 break;
@@ -89,6 +89,6 @@ public class MenuCadastroEleitor {
         eleitores.add(eleitor);
         util.printBold("\nCadastro efetuado com sucesso!");
         util.pressEnter(scan);
-        util.clearTermnal();
+        util.clearTerminal();
     }
 }

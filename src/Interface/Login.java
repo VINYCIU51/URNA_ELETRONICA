@@ -11,7 +11,7 @@ public class Login {
 
     public Login(Scanner scan, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao, Votacao votacao) {
 
-        util.clearTermnal();
+        util.clearTerminal();
         System.out.println("=======LOGIN=======\n");
         Eleitor eleitor = null;
 

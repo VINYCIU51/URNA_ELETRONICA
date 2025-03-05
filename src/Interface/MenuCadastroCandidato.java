@@ -7,7 +7,7 @@ import usuarios.Candidato;
 public class MenuCadastroCandidato {
 
     public MenuCadastroCandidato(Scanner scan, ListaCandidatos candidatos) {
-        util.clearTermnal();
+        util.clearTerminal();
 
         System.out.println("===== CADASTRO DE CANDIDATOS =====\n");
 
@@ -19,9 +19,7 @@ public class MenuCadastroCandidato {
 
             if (util.hasInvalidSpace(nome)) {
                 util.fixError("Uso inválido de espacos vazios");
-                continue;
-            }
-            if (util.hasNum(nome)) {
+            } else if (util.hasNum(nome)) {
                 util.fixError("Utilize apenas letras");
 
             } else {
@@ -38,10 +36,10 @@ public class MenuCadastroCandidato {
 
             if (util.hasInvalidSpace(cargo)) {
                 util.fixError("Uso inválido de espacos vazios");
-                continue;
-            }
-            if (util.hasNum(cargo)) {
+
+            } else if (util.hasNum(cargo)) {
                 util.fixError("Utilize apenas letras");
+
             } else {
                 util.fixedError();
                 break;
@@ -56,10 +54,10 @@ public class MenuCadastroCandidato {
 
             if (util.hasInvalidSpace(partido)) {
                 util.fixError("Uso inválido de espacos vazios");
-                continue;
-            }
-            if (util.hasNum(partido)) {
+
+            } else if (util.hasNum(partido)) {
                 util.fixError("Utilize apenas letras");
+
             } else {
                 util.fixedError();
                 break;
@@ -96,6 +94,6 @@ public class MenuCadastroCandidato {
         candidatos.add(candidato);
         util.printBold("\nCadastro efetuado com sucesso!");
         util.pressEnter(scan);
-        util.clearTermnal();
+        util.clearTerminal();
     }
 }

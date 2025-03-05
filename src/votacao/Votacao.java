@@ -28,19 +28,22 @@ public class Votacao {
         this.votoNulo++;
     }
 
-    public void addValido() {
-        this.votosValidos++;
-    }
-
-    public void contabilizarVoto() {
-        this.votosTotais++;
-        if (this.votosTotais >= this.limiteVotos) {
+    public void contabilizarVoto(String voto) {
+        if (voto.toLowerCase() == "valido") {
+            votosValidos++;
+        } else if (voto.toLowerCase() == "nulo") {
+            votoNulo++;
+        } else if (voto.toLowerCase() == "branco") {
+            votoBranco++;
+        }
+        votosTotais++;
+        if (votosTotais >= limiteVotos) {
             eleicao.finalizar();
         }
     }
 
     public void setLimiteVotos(int limite) {
-        this.limiteVotos = limite;
+        limiteVotos = limite;
     }
 
     public int getBranco() {

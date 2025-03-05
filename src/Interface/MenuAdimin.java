@@ -11,7 +11,7 @@ public class MenuAdimin {
     // @formatter:off
     public MenuAdimin(Scanner scan, Eleitor eleitor, Votacao votacao, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao) {
         
-        util.clearTermnal();
+        util.clearTerminal();
         while (true) {
             
             System.out.println("======== MENU ========\n");

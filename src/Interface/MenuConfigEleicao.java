@@ -11,7 +11,7 @@ public class MenuConfigEleicao {
 
     public MenuConfigEleicao(Scanner scan, Eleicao eleicao, Votacao votacao) {
 
-        util.clearTermnal();
+        util.clearTerminal();
 
         // @formatter:off
         System.out.println("====== CONFIGURAR ELEIÇÃO ======");
@@ -35,7 +35,7 @@ public class MenuConfigEleicao {
             switch (Integer.parseInt(strOpcao)) {
 
                 case 0:
-                    util.clearTermnal();
+                    util.clearTerminal();
                     return;
 
                 case 1:
