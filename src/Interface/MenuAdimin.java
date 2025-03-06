@@ -9,7 +9,7 @@ import registros.*;
 public class MenuAdimin {
 
     // @formatter:off
-    public MenuAdimin(Scanner scan, Eleitor eleitor, Votacao votacao, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao) {
+    public MenuAdimin(Scanner scan, Eleitor eleitor, Votacao votacao, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao, ListaCargos cargos) {
         
         util.clearTerminal();
         while (true) {
@@ -35,7 +35,7 @@ public class MenuAdimin {
 
             switch (Integer.parseInt(strOpcao)) {
 
-                case 1 -> new MenuCadastroCandidato(scan, candidatos);
+                case 1 -> new MenuCadastroCandidato(scan, candidatos, cargos);
 
                 case 2 -> new MenuCadastroEleitor(scan, eleitores);
 
@@ -55,11 +55,11 @@ public class MenuAdimin {
 
                 case 4 -> new MenuConfigEleicao(scan, eleicao, votacao);
 
-                case 5 -> new MenuResultados(scan, votacao);
+                case 5 -> new MenuResultados(scan, votacao, candidatos, cargos);
 
-                case 6 -> new Login(scan, eleitores, candidatos, eleicao, votacao);
+                case 6 -> new Login(scan, eleitores, candidatos, eleicao, votacao, cargos);
 
-                case 7 -> new Login(scan, eleitores, candidatos, eleicao, votacao);
+                case 7 -> new Login(scan, eleitores, candidatos, eleicao, votacao, cargos);
 
                 case 0 -> {
                     System.out.println("Saindo...");

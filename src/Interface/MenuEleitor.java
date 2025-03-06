@@ -2,6 +2,7 @@ package Interface;
 
 import java.util.Scanner;
 import registros.ListaCandidatos;
+import registros.ListaCargos;
 import registros.ListaEleitores;
 import votacao.Votacao;
 import eleicao.Eleicao;
@@ -9,7 +10,7 @@ import usuarios.Eleitor;
 
 public class MenuEleitor {
     // @formatter:off
-    public MenuEleitor(Scanner scan, Eleitor eleitor, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao, Votacao votacao) {
+    public MenuEleitor(Scanner scan, Eleitor eleitor, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao, Votacao votacao, ListaCargos cargos) {
 
         util.clearTerminal();
         while (true) {
@@ -45,7 +46,7 @@ public class MenuEleitor {
                     }
                 }
 
-                case 2 -> new Login(scan, eleitores, candidatos, eleicao, votacao);
+                case 2 -> new Login(scan, eleitores, candidatos, eleicao, votacao, cargos);
 
                 case 0 -> System.out.println("Saindo...");
 

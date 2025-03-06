@@ -1,7 +1,8 @@
 package Interface;
 
 import java.util.Scanner;
-import registros.ListaCandidatos;
+import cargo.Cargo;
+import registros.*;
 import resultados.Majoritario;
 import resultados.proporcional.*;
 import java.time.LocalDateTime;
@@ -11,27 +12,38 @@ import usuarios.*;
 
 public class MenuResultados {
 
-    public MenuResultados(Scanner scan, Votacao votacao, ListaCandidatos candidatos) {
+    public MenuResultados(Scanner scan, Votacao votacao, ListaCandidatos candidatos, ListaCargos listCargos) {
         util.clearTerminal();
         System.out.println("========== RESULTADOS ===========\n");
         System.out.println(votacao.toString());
 
-        // Chamada ao sistema majoritário
-        Majoritario majo = new Majoritario(candidatos);
-        Candidato vencedor = majo.vencedor("presidente"); // Agora retorna o vencedor
-        if (vencedor != null) {
-            System.out.println("Presidente: " + vencedor.getNome() + " (" + vencedor.getVotos() + " votos)");
+        // EXIBICAO DOS VENCEDORES DE VOTACOES MAJORITARIAS
+        Majoritario majoritario = new Majoritario(candidatos);
+        for (Cargo cargo : listCargos.getList().values()) {
+            if (cargo.getTipo().equals("majoritario")) {
+                Candidato vencedor = majoritario.vencedor(cargo.getCargo());
+
+                if (vencedor != null) {
+                    System.out.println(
+                            cargo.getCargo() + ": " + vencedor.getNome() + " (" + vencedor.getVotos() + " votos).");
+                }
+            }
         }
 
-        // Chamada ao sistema proporcional
-        VencedorProporcional propo = new VencedorProporcional(candidatos);
-        propo.exibir("deputado", 2);
+        // EXIBICAO DOS VENCEDORES DE VOTACOES PROPORCIONAIS
+        VencedorProporcional proporcional = new VencedorProporcional(candidatos);
+        for (Cargo cargo : listCargos.getList().values()) {
+            if (cargo.getTipo().equals("proporcional")) {
+                proporcional.exibir(cargo.getCargo(), cargo.getVagas());
+            }
+        }
 
+        // Exibindo data e hora
         LocalDateTime agora = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        System.out.println("Relatório feito em: " + agora.format(formatter));
+        System.out.println("\n\nRelatório feito em: " + agora.format(formatter));
 
         util.pressEnter(scan);
+        util.clearTerminal();
     }
-
 }

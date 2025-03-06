@@ -39,7 +39,6 @@ public class Eleitor {
     }
 
     // RETORNA TODAS AS INFORMACOES DO ELEITOR COM BASE NOS PARAMETROS PEDIDOS
-
     public String toString(String... campos) {
         StringBuilder sb = new StringBuilder();
 

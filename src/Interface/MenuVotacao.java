@@ -63,6 +63,7 @@ public class MenuVotacao {
                     tipoVoto = "valido";
                 }
 
+                // LOOP DE CONFIRMACAO DE VOTO
                 boolean votoConfirmado = false;
                 while (!votoConfirmado) {
                     //@formatter:off
@@ -70,9 +71,7 @@ public class MenuVotacao {
                     //@formatter:on
 
                     String confirmacao = scan.nextLine();
-                    if (confirmacao.equalsIgnoreCase("s")) { // caso confirme voto, encerra processo todo
-                        eleitor.setJaVotou();
-                        cargosVotados.add(cargoAtual);
+                    if (confirmacao.equalsIgnoreCase("s")) { // caso confirme voto, encerra este loop
                         votoConfirmado = true;
 
                     } else if (confirmacao.equalsIgnoreCase("n")) { // sai do loop de confirm e volta para o principal
@@ -80,11 +79,16 @@ public class MenuVotacao {
                         break;
 
                     } else {
-                        util.fixError("Entrada inválida. digite 's' para confirmar ou 'n' para cancelar"); // repete
+                        util.fixError("Entrada inválida");// repete
                     }
                 }
 
-                if (votoConfirmado) { // caso confirmado, passa para proximo cargo
+                // COMPUTA O VOTO CASO CONFIRMADO E SEGUE A VOTACAO
+                if (votoConfirmado) {
+                    candidato.addVoto();
+                    votacao.contabilizarVoto(tipoVoto);
+                    eleitor.setJaVotou();
+                    cargosVotados.add(cargoAtual);
                     break;
                 }
             }

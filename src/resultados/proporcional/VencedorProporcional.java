@@ -1,5 +1,6 @@
 package resultados.proporcional;
 
+import Interface.util;
 import java.util.List;
 import java.util.Map;
 import usuarios.Candidato;
@@ -12,38 +13,40 @@ public class VencedorProporcional extends Proporcional {
     }
 
     public void exibir(String cargo, int totalVagas) {
-        // EFETUA OS CALCULOS PARA DEFINIR OS VENCEDORES
+        // EFETUA OS CÁLCULOS PARA DEFINIR OS VENCEDORES
         Map<String, Integer> vagasPorPartido = calcularVagas(cargo, totalVagas);
-        Map<String, List<Candidato>> eleitos = preencherVagas(vagasPorPartido, cargo); // Agora passando o cargo aqui
 
-        boolean candidatosEncontrados = false;
+        // Se nenhuma vaga foi atribuída, retorna
+        if (vagasPorPartido.isEmpty()) {
+            return;
+        }
 
+        // Agora chamando corretamente o método 'preencherVagas' com a Lista de
+        // Candidatos
+        DistribuicaoVagas distribuidor = new DistribuicaoVagas();
+        Map<String, List<Candidato>> eleitos = distribuidor.preencherVagas(vagasPorPartido, candidatos, cargo);
+
+        // Se não houver candidatos eleitos, retorna
+        if (eleitos.isEmpty()) {
+            return;
+        }
+
+        // Exibe o cargo uma única vez
+        System.out.println("\nCARGO DE " + cargo.toUpperCase() + "\n");
+
+        // Percorre os partidos e exibe os candidatos eleitos
         for (Map.Entry<String, List<Candidato>> entry : eleitos.entrySet()) {
             String partido = entry.getKey();
             List<Candidato> candidatosEleitos = entry.getValue();
 
-            // VERIFICA SE O PARTIDO TEM CANDIDATOS ELEITOS
+            // Exibe apenas partidos que elegeram candidatos
             if (!candidatosEleitos.isEmpty()) {
-
-                // EXIBE O CARGO, PARTIDO, VAGAS QUE O PARTIDO RECEBEU E SEUS OCUPANTES
-                if (!candidatosEncontrados) {
-                    System.out.println("\nCandidatos eleitos para o cargo de " + cargo + "\n");
-                    candidatosEncontrados = true;
-                }
-
-                System.out.println("Partido: " + partido);
-                System.out.println("Vagas alocadas: " + vagasPorPartido.get(partido));
+                util.printBold("Partido: " + partido + "   (" + vagasPorPartido.get(partido) + " Vagas)\n");
 
                 for (Candidato eleito : candidatosEleitos) {
                     System.out.println(" - " + eleito.getNome() + " (" + eleito.getVotos() + " votos)");
                 }
             }
         }
-
-        // RETORNA A MENSAGEM CASO NAO SEJAM ENCONTRADOS CANDIDATOS ELEITOS
-        if (!candidatosEncontrados) {
-            System.out.println("ERRO: Nenhum candidato foi eleito para o cargo de " + cargo);
-        }
     }
-
 }

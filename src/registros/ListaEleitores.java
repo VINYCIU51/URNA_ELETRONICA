@@ -10,11 +10,13 @@ public class ListaEleitores implements AdmRegistos<Eleitor> {
     private final Map<String, Eleitor> listaEleitor = new HashMap<>();
 
     // RETORNA A LISTA PARA MANUSEIO
+    @Override
     public Map<String, Eleitor> getList() {
         return Collections.unmodifiableMap(listaEleitor);
     }
 
     // RETORNA UM ELEITOR COM BASE NO CPF
+    @Override
     public Eleitor buscar(Object cpf) {
         if (cpf instanceof String) {
             return listaEleitor.get(cpf);
@@ -23,11 +25,13 @@ public class ListaEleitores implements AdmRegistos<Eleitor> {
     }
 
     // ADICIONA UM ELEITOR A LISTA
+    @Override
     public void add(Eleitor eleitor) {
         listaEleitor.put(eleitor.getCpf(), eleitor);
     }
 
     // REMOVE UM ELEITOR DA LISTA
+    @Override
     public void remove(Object cpf) {
         if (cpf instanceof String) {
             listaEleitor.remove(cpf);
@@ -35,6 +39,7 @@ public class ListaEleitores implements AdmRegistos<Eleitor> {
     }
 
     // RETORNA SE O ELEITOR JA FOI CADASTRADO OU NAO
+    @Override
     public boolean existente(Object cpf) {
         return (cpf instanceof String) && listaEleitor.containsKey(cpf);
     }

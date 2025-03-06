@@ -4,12 +4,14 @@ import java.util.Scanner;
 import eleicao.Eleicao;
 import usuarios.Eleitor;
 import registros.ListaCandidatos;
+import registros.ListaCargos;
 import registros.ListaEleitores;
 import votacao.Votacao;
 
 public class Login {
 
-    public Login(Scanner scan, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao, Votacao votacao) {
+    public Login(Scanner scan, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao, Votacao votacao,
+            ListaCargos cargos) {
 
         util.clearTerminal();
         System.out.println("=======LOGIN=======\n");
@@ -24,10 +26,10 @@ public class Login {
 
             if (eleitor != null) {
                 if (eleitor.getCpf().equals("12345")) {
-                    new MenuAdimin(scan, eleitor, votacao, eleitores, candidatos, eleicao);
+                    new MenuAdimin(scan, eleitor, votacao, eleitores, candidatos, eleicao, cargos);
                     break;
                 } else {
-                    new MenuEleitor(scan, eleitor, eleitores, candidatos, eleicao, votacao);
+                    new MenuEleitor(scan, eleitor, eleitores, candidatos, eleicao, votacao, cargos);
                     break;
                 }
             } else {

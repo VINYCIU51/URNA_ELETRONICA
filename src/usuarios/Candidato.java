@@ -42,7 +42,6 @@ public class Candidato {
 
     // RETORNA AS INFORMACOES DO CANDIDATO FORMATADAS COM BASE NOS PARAMETROS
     // PEDIDOS
-
     public String toString(String... campos) {
         StringBuilder sb = new StringBuilder();
 

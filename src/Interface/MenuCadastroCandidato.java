@@ -1,12 +1,15 @@
 package Interface;
 
 import java.util.Scanner;
+
+import cargo.*;
+import registros.ListaCargos;
 import registros.ListaCandidatos;
 import usuarios.Candidato;
 
 public class MenuCadastroCandidato {
 
-    public MenuCadastroCandidato(Scanner scan, ListaCandidatos candidatos) {
+    public MenuCadastroCandidato(Scanner scan, ListaCandidatos candidatos, ListaCargos cargos) {
         util.clearTerminal();
 
         System.out.println("===== CADASTRO DE CANDIDATOS =====\n");
@@ -40,6 +43,8 @@ public class MenuCadastroCandidato {
             } else if (util.hasNum(cargo)) {
                 util.fixError("Utilize apenas letras");
 
+            } else if (!cargos.getList().containsKey(cargo.toLowerCase())) {
+                util.fixError("Cargo não existente");
             } else {
                 util.fixedError();
                 break;
@@ -84,8 +89,13 @@ public class MenuCadastroCandidato {
                 util.fixError("Número já cadastrado");
 
             } else {
-                util.fixedError();
-                break;
+                Cargo cargoEleitoral = cargos.getList().get(cargo);
+                if (strNum.length() != cargoEleitoral.getDigitos()) {
+                    util.fixError("O número deve ter " + cargoEleitoral.getDigitos() + " digitos");
+                } else {
+                    util.fixedError();
+                    break;
+                }
             }
         }
 
