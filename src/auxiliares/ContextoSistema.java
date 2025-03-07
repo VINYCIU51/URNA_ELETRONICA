@@ -5,24 +5,90 @@ import eleicao.Eleicao;
 import usuarios.*;
 import registros.*;
 import votacao.Votacao;
+import Interface.*;
 
+// Classe responsavel por passar todo o necessario para o sistema
+// Evitando o acumulo de parâmetros
 public class ContextoSistema {
+
+    // parâmetros
     public Scanner scan;
     public Eleitor eleitor;
-    public Candidato canjdidato;
-    public ListaCandidatos candidatos;
-    public ListaCargos cargos;
-    public ListaEleitores eleitores;
+    public Candidato candidato;
+    public ListaCandidatos listaCandidatos;
+    public ListaCargos listaCargos;
+    public ListaEleitores listaEleitores;
     public Eleicao eleicao;
     public Votacao votacao;
 
-    public ContextoSistema(Scanner scan, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao,
-            Votacao votacao, ListaCargos cargos) {
+    // Menus
+    public MenuLogin menuLogin;
+    public MenuEleitor menuEleitor;
+    public MenuCadastroCandidato menuCadastroCandidato;
+    public MenuConfigEleicao menuConfigEleicao;
+    public MenuAdimin menuAdmin;
+    public MenuVotacao menuVotacao;
+    public MenuResultados menuResultados;
+    public MenuCadastroEleitor menuCadastroEleitor;
+
+    public ContextoSistema(Scanner scan, ListaEleitores listaEleitores, ListaCandidatos listaCandidatos,
+            Eleicao eleicao,
+            Votacao votacao, ListaCargos listaCargos) {
         this.scan = scan;
-        this.eleitores = eleitores;
-        this.candidatos = candidatos;
+        this.listaEleitores = listaEleitores;
+        this.listaCandidatos = listaCandidatos;
         this.eleicao = eleicao;
         this.votacao = votacao;
-        this.cargos = cargos;
+        this.listaCargos = listaCargos;
+
+        this.eleitor = null;
+
+        // Criando os menus
+        this.menuLogin = new MenuLogin(this);
+        this.menuEleitor = new MenuEleitor(this);
+        this.menuCadastroCandidato = new MenuCadastroCandidato(this);
+        this.menuConfigEleicao = new MenuConfigEleicao(this);
+        this.menuAdmin = new MenuAdimin(this);
+        this.menuVotacao = new MenuVotacao(this);
+        this.menuResultados = new MenuResultados(this);
+        this.menuCadastroEleitor = new MenuCadastroEleitor(this);
+    }
+
+    // Métodos para exibir os menus
+    public void exibirMenuLogin() {
+        menuLogin.exibir();
+    }
+
+    public void exibirMenuEleitor() {
+        menuEleitor.exibir();
+    }
+
+    public void exibirMenuCadastroCandidato() {
+        menuCadastroCandidato.exibir();
+    }
+
+    public void exibirMenuCadastroEleitor() {
+        menuCadastroEleitor.exibir();
+    }
+
+    public void exibirMenuConfigEleicao() {
+        menuConfigEleicao.exibir();
+    }
+
+    public void exibirMenuAdmin() {
+        menuAdmin.exibir();
+    }
+
+    public void exibirMenuVotacao() {
+        menuVotacao.exibir();
+    }
+
+    public void exibirMenuResultados() {
+        menuResultados.exibir();
+    }
+
+    // Método para atualizar o eleitor
+    public void setEleitor(Eleitor eleitor) {
+        this.eleitor = eleitor;
     }
 }

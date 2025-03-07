@@ -1,65 +1,62 @@
 package Interface;
 
-import java.util.Scanner;
-import eleicao.*;
-import usuarios.*;
-import votacao.Votacao;
-import registros.*;
+import auxiliares.*;
 
 public class MenuAdimin {
 
-    // @formatter:off
-    public MenuAdimin(Scanner scan, Eleitor eleitor, Votacao votacao, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao, ListaCargos cargos) {
-        
-        util.clearTerminal();
+    private ContextoSistema ctx;
+
+    public MenuAdimin(ContextoSistema ctx) {
+        this.ctx = ctx;
+    }
+
+    public void exibir() {
+        Auxi.clearTerminal();
         while (true) {
-            
+
             System.out.println("======== MENU ========\n");
             System.out.println(
-                "[1] - Cadastrar candidato\n" +
-                "[2] - Cadastrar eleitor\n" +
-                "[3] - Votar\n" +
-                "[4] - Configurações da eleição\n" +
-                "[5] - Exibir resultados\n" +
-                "[6] - Voltar ao login\n" +
-                "[0] - Sair do programa");        
-    // @formatter:on
+                    "[1] - Cadastrar candidato\n" +
+                            "[2] - Cadastrar eleitor\n" +
+                            "[3] - Votar\n" +
+                            "[4] - Configurações da eleição\n" +
+                            "[5] - Exibir resultados\n" +
+                            "[6] - Voltar ao login\n" +
+                            "[0] - Sair do programa");
 
-            String strOpcao = scan.nextLine();
+            String strOpcao = ctx.scan.nextLine();
 
-            if (!util.isValidInt(strOpcao)) {
-                util.fixError("Digite apenas números");
-                util.clearRange(10, "a");
+            if (!Auxi.isValidInt(strOpcao)) {
+                Auxi.fixError("Digite apenas números");
+                Auxi.clearRange(10, "a");
                 continue;
             }
 
             switch (Integer.parseInt(strOpcao)) {
 
-                case 1 -> new MenuCadastroCandidato(scan, candidatos, cargos);
+                case 1 -> ctx.exibirMenuCadastroCandidato();
 
-                case 2 -> new MenuCadastroEleitor(scan, eleitores);
+                case 2 -> ctx.exibirMenuCadastroEleitor();
 
                 case 3 -> {
-                    if (eleitor.getJaVotou()) {
-                        util.fixError("ERRO! Você não pode votar duas vezes");
-                        util.clearRange(10, "a");
+                    if (ctx.eleitor.getJaVotou()) {
+                        Auxi.fixError("ERRO! Você não pode votar duas vezes");
+                        Auxi.clearRange(10, "a");
                         continue;
-                    } else if (candidatos.getList().isEmpty() || !eleicao.isAtiva()) {
-                        util.fixError("Eleição desativada ou sem candidatos cadastrados até o momento");
-                        util.clearRange(10, "a");
+                    } else if (ctx.listaCandidatos.getList().isEmpty() || !ctx.eleicao.isAtiva()) {
+                        Auxi.fixError("Eleição desativada ou sem candidatos cadastrados até o momento");
+                        Auxi.clearRange(10, "a");
                         continue;
                     } else {
-                        new MenuVotacao(scan, eleitor, candidatos, votacao, eleicao);
+                        ctx.exibirMenuVotacao();
                     }
                 }
 
-                case 4 -> new MenuConfigEleicao(scan, eleicao, votacao);
+                case 4 -> ctx.exibirMenuConfigEleicao();
 
-                case 5 -> new MenuResultados(scan, votacao, candidatos, cargos);
+                case 5 -> ctx.exibirMenuResultados();
 
-                case 6 -> new Login(scan, eleitores, candidatos, eleicao, votacao, cargos);
-
-                case 7 -> new Login(scan, eleitores, candidatos, eleicao, votacao, cargos);
+                case 6 -> ctx.exibirMenuLogin();
 
                 case 0 -> {
                     System.out.println("Saindo...");
@@ -67,13 +64,11 @@ public class MenuAdimin {
                 }
 
                 default -> {
-                    util.fixError("Opção inválida");
-                    util.clearRange(10, "a");
+                    Auxi.fixError("Opção inválida");
+                    Auxi.clearRange(10, "a");
                 }
-
             }
-
         }
-
     }
+
 }

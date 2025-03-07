@@ -7,18 +7,22 @@ import registros.ListaCandidatos;
 import registros.ListaCargos;
 import registros.ListaEleitores;
 import usuarios.*;
-import Interface.Login;
+import auxiliares.ContextoSistema;
 
 public class Main {
 
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
+
         ListaCargos cargos = new ListaCargos();
         ListaCandidatos candidatos = new ListaCandidatos();
         ListaEleitores eleitores = new ListaEleitores();
+
         Eleicao eleicao = new Eleicao();
         Votacao votacao = new Votacao(eleicao, 0);
+
+        ContextoSistema contexto = new ContextoSistema(scan, eleitores, candidatos, eleicao, votacao, cargos);
 
         Eleitor admin = new Eleitor("admin", 20, "12345", "123");
         eleitores.add(admin);
@@ -33,7 +37,9 @@ public class Main {
         Candidato corsa = new Candidato("corsa", "deputado", "pc", 17);
         candidatos.add(corsa);
 
-        new Login(scan, eleitores, candidatos, eleicao, votacao, cargos);
+        contexto.exibirMenuLogin();
+
+        scan.close();
 
     }
 }

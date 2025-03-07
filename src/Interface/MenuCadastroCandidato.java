@@ -1,32 +1,33 @@
 package Interface;
 
-import java.util.Scanner;
-
 import cargo.*;
-import registros.ListaCargos;
-import registros.ListaCandidatos;
 import usuarios.Candidato;
+import auxiliares.*;
 
 public class MenuCadastroCandidato {
 
-    public MenuCadastroCandidato(Scanner scan, ListaCandidatos candidatos, ListaCargos cargos) {
-        util.clearTerminal();
+    private ContextoSistema ctx;
 
+    public MenuCadastroCandidato(ContextoSistema ctx) {
+        this.ctx = ctx;
+    }
+
+    public void exibir() {
+        Auxi.clearTerminal();
         System.out.println("===== CADASTRO DE CANDIDATOS =====\n");
 
         // PEDIDO DE NOME
         String nome;
         while (true) {
-            util.printBold("NOME: ");
-            nome = scan.nextLine();
+            Auxi.printBold("NOME: ");
+            nome = ctx.scan.nextLine();
 
-            if (util.hasInvalidSpace(nome)) {
-                util.fixError("Uso inválido de espacos vazios");
-            } else if (util.hasNum(nome)) {
-                util.fixError("Utilize apenas letras");
-
+            if (Auxi.hasInvalidSpace(nome)) {
+                Auxi.fixError("Uso inválido de espaços vazios");
+            } else if (Auxi.hasNum(nome)) {
+                Auxi.fixError("Utilize apenas letras");
             } else {
-                util.fixedError();
+                Auxi.fixedError();
                 break;
             }
         }
@@ -34,19 +35,17 @@ public class MenuCadastroCandidato {
         // PEDIDO DE CARGO
         String cargo;
         while (true) {
-            util.printBold("CARGO: ");
-            cargo = scan.nextLine();
+            Auxi.printBold("CARGO: ");
+            cargo = ctx.scan.nextLine();
 
-            if (util.hasInvalidSpace(cargo)) {
-                util.fixError("Uso inválido de espacos vazios");
-
-            } else if (util.hasNum(cargo)) {
-                util.fixError("Utilize apenas letras");
-
-            } else if (!cargos.getList().containsKey(cargo.toLowerCase())) {
-                util.fixError("Cargo não existente");
+            if (Auxi.hasInvalidSpace(cargo)) {
+                Auxi.fixError("Uso inválido de espaços vazios");
+            } else if (Auxi.hasNum(cargo)) {
+                Auxi.fixError("Utilize apenas letras");
+            } else if (!ctx.listaCargos.getList().containsKey(cargo.toLowerCase())) {
+                Auxi.fixError("Cargo não existente");
             } else {
-                util.fixedError();
+                Auxi.fixedError();
                 break;
             }
         }
@@ -54,56 +53,52 @@ public class MenuCadastroCandidato {
         // PEDIDO DE PARTIDO
         String partido;
         while (true) {
-            util.printBold("PARTIDO: ");
-            partido = scan.nextLine();
+            Auxi.printBold("PARTIDO: ");
+            partido = ctx.scan.nextLine(); // Usando ctx.scan
 
-            if (util.hasInvalidSpace(partido)) {
-                util.fixError("Uso inválido de espacos vazios");
-
-            } else if (util.hasNum(partido)) {
-                util.fixError("Utilize apenas letras");
-
+            if (Auxi.hasInvalidSpace(partido)) {
+                Auxi.fixError("Uso inválido de espaços vazios");
+            } else if (Auxi.hasNum(partido)) {
+                Auxi.fixError("Utilize apenas letras");
             } else {
-                util.fixedError();
+                Auxi.fixedError();
                 break;
             }
         }
 
-        // PEDIDO DE NUMERO DE CANDIDATURA
+        // PEDIDO DE NÚMERO DE CANDIDATURA
         int numero = 0;
         while (true) {
-            util.printBold("NÚMERO: ");
-            String strNum = scan.nextLine();
+            Auxi.printBold("NÚMERO: ");
+            String strNum = ctx.scan.nextLine(); // Usando ctx.scan
 
-            if (!util.isValidInt(strNum)) {
-                util.fixError("Apenas números");
+            if (!Auxi.isValidInt(strNum)) {
+                Auxi.fixError("Apenas números");
                 continue;
             }
 
             numero = Integer.parseInt(strNum);
 
             if (numero <= 0) {
-                util.fixError("Apenas números positivos");
-
-            } else if (candidatos.getList().containsKey(numero)) {
-                util.fixError("Número já cadastrado");
-
+                Auxi.fixError("Apenas números positivos");
+            } else if (ctx.listaCandidatos.getList().containsKey(numero)) {
+                Auxi.fixError("Número já cadastrado");
             } else {
-                Cargo cargoEleitoral = cargos.getList().get(cargo);
+                Cargo cargoEleitoral = ctx.listaCargos.getList().get(cargo);
                 if (strNum.length() != cargoEleitoral.getDigitos()) {
-                    util.fixError("O número deve ter " + cargoEleitoral.getDigitos() + " digitos");
+                    Auxi.fixError("O número deve ter " + cargoEleitoral.getDigitos() + " dígitos");
                 } else {
-                    util.fixedError();
+                    Auxi.fixedError();
                     break;
                 }
             }
         }
 
-        // CRIACAO E ADIÇÃO A LISTA
+        // CRIACAO E ADIÇÃO À LISTA
         Candidato candidato = new Candidato(nome, cargo, partido, numero);
-        candidatos.add(candidato);
-        util.printBold("\nCadastro efetuado com sucesso!");
-        util.pressEnter(scan);
-        util.clearTerminal();
+        ctx.listaCandidatos.add(candidato);
+        Auxi.printBold("\nCadastro efetuado com sucesso!");
+        Auxi.pressEnter(ctx.scan);
+        Auxi.clearTerminal();
     }
 }

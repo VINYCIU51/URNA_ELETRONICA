@@ -1,12 +1,11 @@
-package Interface;
+package auxiliares;
 
 import java.util.Scanner;
 
-public class util {
+public class Auxi {
 
-    // LIMPA O TERMINAL
+    // Limpa o terminal
     public static void clearTerminal() {
-
         ProcessBuilder pB;
 
         if (System.getProperty("os.name").toLowerCase().contains("win")) {
@@ -34,33 +33,34 @@ public class util {
         }
     }
 
-    // PAUSA O FLUXO ATE O ENTER SER PRESSIONADO
+    // Pausa o fluxo ate pressionar enter( controla o loop por conta do
+    // clearTerminal )
     public static void pressEnter(Scanner scan) {
         System.out.print("\nPressione \033[1mENTER\033[0m para voltar ao menu...");
         scan.nextLine();
     }
 
-    // VERIFICA SE HA ESPACOS INVALIDOS OU É VAZIO
+    // Verifica se há espaços inválidos
     public static boolean hasInvalidSpace(String texto) {
         return texto.isEmpty() || !texto.matches("^\\S.*\\S$");
     }
 
-    // EXIBE UM TEXTO EM NEGRITO
+    // Exibe um texto em negrito
     public static void printBold(Object texto) {
         System.out.print("\033[1m" + texto + "\033[0m");
     }
 
-    // VERIFICA SE HÁ NUMEROS NA STRING
+    // Verifica se há números em uma string
     public static boolean hasNum(String texto) {
         return texto.matches(".*\\d.*");
     }
 
-    // VERIFICA SE O NUMERO É UM INTEIRO SEM ESPACOS
+    // Verifica se a string é composta por apenas numeros( melhoria do hasNextint )
     public static boolean isValidInt(String numero) {
         return numero.matches("^\\d+$");
     }
 
-    // EXIBE MENSAGEM DE ERRO E POSSIBILITA A CORRECAO DE INPUT
+    // Exibe mensagem de erro e possibilita correção
     public static void fixError(String msgErro) {
         fixedError();
         System.out.print("\033[1A"); // Sobe para o pedido de input
@@ -70,14 +70,14 @@ public class util {
         System.out.print("\033[3A"); // volta para a linha de input
     }
 
-    // APAGA A MSG DE ERRO DO FIXERROR
+    // Apaga a mensagem de erro do fixError
     public static void fixedError() {
         System.out.print("\033[1B"); // desce para a linha de erro
         System.out.print("\033[K"); // apaga a mensagem
         System.out.print("\033[1A"); // volta para a linha correta
     }
 
-    // MOVE O CURSOR E REALLIZA A ACAO ESPECIFICADA
+    // Move o cursor pelo terminal e realiza as ações especificadas
     public static void controlTerminal(String... acoes) {
         for (String acao : acoes) {
             System.out.print("\033[" + acao.toUpperCase());

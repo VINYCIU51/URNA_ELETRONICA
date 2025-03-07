@@ -1,6 +1,6 @@
 package resultados.proporcional;
 
-import Interface.util;
+import auxiliares.Auxi;
 import java.util.List;
 import java.util.Map;
 import usuarios.Candidato;
@@ -41,7 +41,7 @@ public class VencedorProporcional extends Proporcional {
 
             // Exibe apenas partidos que elegeram candidatos
             if (!candidatosEleitos.isEmpty()) {
-                util.printBold("Partido: " + partido + "   (" + vagasPorPartido.get(partido) + " Vagas)\n");
+                Auxi.printBold("Partido: " + partido + "   (" + vagasPorPartido.get(partido) + " Vagas)\n");
 
                 for (Candidato eleito : candidatosEleitos) {
                     System.out.println(" - " + eleito.getNome() + " (" + eleito.getVotos() + " votos)");

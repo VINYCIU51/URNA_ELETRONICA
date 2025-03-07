@@ -1,30 +1,32 @@
 package Interface;
 
-import java.util.Scanner;
-import registros.*;
 import usuarios.Eleitor;
+import auxiliares.*;
 
 public class MenuCadastroEleitor {
 
-    public MenuCadastroEleitor(Scanner scan, ListaEleitores eleitores) {
-        util.clearTerminal();
+    private ContextoSistema ctx; // Agora usamos apenas o contexto
 
+    public MenuCadastroEleitor(ContextoSistema ctx) {
+        this.ctx = ctx; // Recebe o contexto diretamente
+    }
+
+    public void exibir() {
+        Auxi.clearTerminal();
         System.out.println("===== CADASTRO DE ELEITORES =====\n");
 
         // PEDIDO DE NOME
         String nome;
         while (true) {
-            util.printBold("NOME: ");
-            nome = scan.nextLine();
+            Auxi.printBold("NOME: ");
+            nome = ctx.scan.nextLine(); // Usando ctx.scan
 
-            if (util.hasInvalidSpace(nome)) {
-                util.fixError("Uso inválido de espacos vazios");
-
-            } else if (util.hasNum(nome)) {
-                util.fixError("Digite apenas letras");
-
+            if (Auxi.hasInvalidSpace(nome)) {
+                Auxi.fixError("Uso inválido de espaços vazios");
+            } else if (Auxi.hasNum(nome)) {
+                Auxi.fixError("Digite apenas letras");
             } else {
-                util.fixedError();
+                Auxi.fixedError();
                 break;
             }
         }
@@ -32,21 +34,20 @@ public class MenuCadastroEleitor {
         // PEDIDO DE IDADE
         int idade = 0;
         while (true) {
-            util.printBold("IDADE: ");
-            String strIdade = scan.nextLine();
+            Auxi.printBold("IDADE: ");
+            String strIdade = ctx.scan.nextLine(); // Usando ctx.scan
 
-            if (!util.isValidInt(strIdade)) {
-                util.fixError("Digite apenas números");
+            if (!Auxi.isValidInt(strIdade)) {
+                Auxi.fixError("Digite apenas números");
                 continue;
             }
 
             idade = Integer.parseInt(strIdade);
 
             if (idade < 16 || idade > 120) {
-                util.fixError("Idade inválida");
-
+                Auxi.fixError("Idade inválida");
             } else {
-                util.fixedError();
+                Auxi.fixedError();
                 break;
             }
         }
@@ -54,41 +55,38 @@ public class MenuCadastroEleitor {
         // PEDIDO DE CPF
         String cpf;
         while (true) {
-            util.printBold("CPF: ");
-            cpf = scan.nextLine();
+            Auxi.printBold("CPF: ");
+            cpf = ctx.scan.nextLine(); // Usando ctx.scan
 
             if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}")) {
-                util.fixError("Digite no formato 000.000.000-00");
-
-            } else if (eleitores.getList().containsKey(cpf)) {
-                util.fixError("CPF já cadastrado");
-
+                Auxi.fixError("Digite no formato 000.000.000-00");
+            } else if (ctx.listaEleitores.getList().containsKey(cpf)) { // Usando ctx.listaEleitores
+                Auxi.fixError("CPF já cadastrado");
             } else {
-                util.fixedError();
+                Auxi.fixedError();
                 break;
             }
-
         }
 
+        // PEDIDO DE SENHA
         String senha;
         while (true) {
-            util.printBold("SENHA: ");
-            senha = scan.nextLine();
+            Auxi.printBold("SENHA: ");
+            senha = ctx.scan.nextLine(); // Usando ctx.scan
 
-            if (util.hasInvalidSpace(senha)) {
-                util.fixError("Uso inválido de espacos vazios");
+            if (Auxi.hasInvalidSpace(senha)) {
+                Auxi.fixError("Uso inválido de espaços vazios");
                 continue;
             }
-            util.fixedError();
+            Auxi.fixedError();
             break;
-
         }
 
-        // CRIACAO E ADIÇÃO A LISTA
+        // CRIACAO E ADIÇÃO À LISTA
         Eleitor eleitor = new Eleitor(nome, idade, cpf, senha);
-        eleitores.add(eleitor);
-        util.printBold("\nCadastro efetuado com sucesso!");
-        util.pressEnter(scan);
-        util.clearTerminal();
+        ctx.listaEleitores.add(eleitor); // Usando ctx.listaEleitores
+        Auxi.printBold("\nCadastro efetuado com sucesso!");
+        Auxi.pressEnter(ctx.scan); // Usando ctx.scan
+        Auxi.clearTerminal();
     }
 }

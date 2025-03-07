@@ -1,25 +1,29 @@
 package Interface;
 
-import java.util.Scanner;
-import cargo.Cargo;
-import registros.*;
-import resultados.Majoritario;
-import resultados.proporcional.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import votacao.Votacao;
+import auxiliares.*;
+import cargo.Cargo;
+import resultados.*;
+import resultados.proporcional.*;
 import usuarios.*;
 
 public class MenuResultados {
+    private ContextoSistema ctx;
 
-    public MenuResultados(Scanner scan, Votacao votacao, ListaCandidatos candidatos, ListaCargos listCargos) {
-        util.clearTerminal();
+    public MenuResultados(ContextoSistema ctx) {
+        this.ctx = ctx;
+    }
+
+    // Método para exibir os resultados
+    public void exibir() {
+        Auxi.clearTerminal();
         System.out.println("========== RESULTADOS ===========\n");
-        System.out.println(votacao.toString());
+        System.out.println(ctx.votacao.toString());
 
-        // EXIBICAO DOS VENCEDORES DE VOTACOES MAJORITARIAS
-        Majoritario majoritario = new Majoritario(candidatos);
-        for (Cargo cargo : listCargos.getList().values()) {
+        // Exibição dos vencedores de votações majoritárias
+        Majoritario majoritario = new Majoritario(ctx.listaCandidatos);
+        for (Cargo cargo : ctx.listaCargos.getList().values()) {
             if (cargo.getTipo().equals("majoritario")) {
                 Candidato vencedor = majoritario.vencedor(cargo.getCargo());
 
@@ -30,9 +34,9 @@ public class MenuResultados {
             }
         }
 
-        // EXIBICAO DOS VENCEDORES DE VOTACOES PROPORCIONAIS
-        VencedorProporcional proporcional = new VencedorProporcional(candidatos);
-        for (Cargo cargo : listCargos.getList().values()) {
+        // Exibição dos vencedores de votações proporcionais
+        VencedorProporcional proporcional = new VencedorProporcional(ctx.listaCandidatos);
+        for (Cargo cargo : ctx.listaCargos.getList().values()) {
             if (cargo.getTipo().equals("proporcional")) {
                 proporcional.exibir(cargo.getCargo(), cargo.getVagas());
             }
@@ -43,7 +47,7 @@ public class MenuResultados {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         System.out.println("\n\nRelatório feito em: " + agora.format(formatter));
 
-        util.pressEnter(scan);
-        util.clearTerminal();
+        Auxi.pressEnter(ctx.scan);
+        Auxi.clearTerminal();
     }
 }

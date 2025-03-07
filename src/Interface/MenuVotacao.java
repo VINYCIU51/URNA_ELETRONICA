@@ -1,100 +1,100 @@
 package Interface;
 
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
-import usuarios.Candidato;
-import usuarios.Eleitor;
-import votacao.Votacao;
-import registros.ListaCandidatos;
-import eleicao.*;
+import auxiliares.*;
+import usuarios.*;
 
 public class MenuVotacao {
 
-    public MenuVotacao(Scanner scan, Eleitor eleitor, ListaCandidatos candidatos, Votacao votacao, Eleicao eleicao) {
+    private ContextoSistema ctx;
 
+    public MenuVotacao(ContextoSistema ctx) {
+        this.ctx = ctx;
+    }
+
+    public void exibir() {
         Set<String> cargosVotados = new HashSet<>();
         Set<String> cargosDisponiveis = new HashSet<>();
 
-        util.clearTerminal();
+        Auxi.clearTerminal();
 
-        for (Candidato c : candidatos.getList().values()) { // lista de cargos inseridos
+        // Adicionando cargos disponíveis
+        for (Candidato c : ctx.listaCandidatos.getList().values()) {
             cargosDisponiveis.add(c.getCargo());
         }
 
+        // Processo de votação
         for (String cargoAtual : cargosDisponiveis) {
-            util.clearTerminal();
-            if (cargosVotados.contains(cargoAtual)) { // verifica se o cargo ja foi votado
+            Auxi.clearTerminal();
+            if (cargosVotados.contains(cargoAtual)) {
                 continue;
             }
 
-            // CABECALHO DA ABA VOTACAO
+            // Cabeçalho da aba de votação
             System.out.println("VOTAÇÃO PARA " + cargoAtual.toUpperCase() + "\n");
             System.out.print("[-1] - Votar Nulo\n[-2] - Votar Branco\n");
 
             while (true) {
-                // PEDIDO DO NUMERO DE VOTO
+                // Pedindo o número de voto
                 System.out.print("Informe o número de seu candidato: ");
-                String strNumero = scan.nextLine();
+                String strNumero = ctx.scan.nextLine();
 
-                if (!strNumero.equals("-1") && !strNumero.equals("-2") && !util.isValidInt(strNumero)) {
-                    util.fixError("Entrada inválida");
+                if (!strNumero.equals("-1") && !strNumero.equals("-2") && !Auxi.isValidInt(strNumero)) {
+                    Auxi.fixError("Entrada inválida");
                     continue;
                 }
 
-                util.fixedError();
+                Auxi.fixedError();
                 int numero = Integer.parseInt(strNumero);
 
-                // BLOCO PARA VOTAR BRANCO, NULO OU EM UM CANDIDATO
+                // Bloco para votar nulo, branco ou em um candidato
                 String tipoVoto;
                 Candidato candidato = null;
 
-                if (numero == -1 || numero == -2) { // verificacao para voto nulo ou branco
+                if (numero == -1 || numero == -2) {
                     tipoVoto = (numero == -1) ? "nulo" : "branco";
-
                 } else {
-                    candidato = candidatos.buscar(numero);
+                    candidato = ctx.listaCandidatos.buscar(numero);
 
                     if (candidato == null || !candidato.getCargo().equalsIgnoreCase(cargoAtual)) {
-                        util.fixError("Candidato não encontrado para este cargo");
+                        Auxi.fixError("Candidato não encontrado para este cargo");
                         continue;
                     }
 
                     tipoVoto = "valido";
                 }
 
-                // LOOP DE CONFIRMACAO DE VOTO
+                // Loop de confirmação do voto
                 boolean votoConfirmado = false;
                 while (!votoConfirmado) {
-                    //@formatter:off
-                    System.out.print("Confirmar voto " + (tipoVoto.equalsIgnoreCase("valido") ? ("em " + candidato.getNome()) : tipoVoto) + "? [s/n]: ");
-                    //@formatter:on
+                    System.out.print("Confirmar voto "
+                            + (tipoVoto.equalsIgnoreCase("valido") ? ("em " + candidato.getNome()) : tipoVoto)
+                            + "? [s/n]: ");
 
-                    String confirmacao = scan.nextLine();
-                    if (confirmacao.equalsIgnoreCase("s")) { // caso confirme voto, encerra este loop
+                    String confirmacao = ctx.scan.nextLine();
+                    if (confirmacao.equalsIgnoreCase("s")) {
                         votoConfirmado = true;
-
-                    } else if (confirmacao.equalsIgnoreCase("n")) { // sai do loop de confirm e volta para o principal
-                        util.clearRange(2, "a");
+                    } else if (confirmacao.equalsIgnoreCase("n")) {
+                        Auxi.clearRange(2, "a");
                         break;
-
                     } else {
-                        util.fixError("Entrada inválida");// repete
+                        Auxi.fixError("Entrada inválida");
                     }
                 }
 
-                // COMPUTA O VOTO CASO CONFIRMADO E SEGUE A VOTACAO
+                // Computa o voto se confirmado
                 if (votoConfirmado) {
                     candidato.addVoto();
-                    votacao.contabilizarVoto(tipoVoto);
-                    eleitor.setJaVotou();
+                    ctx.votacao.contabilizarVoto(tipoVoto);
+                    ctx.eleitor.setJaVotou();
                     cargosVotados.add(cargoAtual);
                     break;
                 }
             }
         }
 
-        util.pressEnter(scan);
-        util.clearTerminal();
+        Auxi.pressEnter(ctx.scan);
+        Auxi.clearTerminal();
     }
 }

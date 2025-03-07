@@ -1,58 +1,55 @@
 package Interface;
 
-import java.util.Scanner;
-import registros.ListaCandidatos;
-import registros.ListaCargos;
-import registros.ListaEleitores;
-import votacao.Votacao;
-import eleicao.Eleicao;
-import usuarios.Eleitor;
+import auxiliares.*;
 
 public class MenuEleitor {
-    // @formatter:off
-    public MenuEleitor(Scanner scan, Eleitor eleitor, ListaEleitores eleitores, ListaCandidatos candidatos, Eleicao eleicao, Votacao votacao, ListaCargos cargos) {
 
-        util.clearTerminal();
+    private ContextoSistema ctx;
+
+    public MenuEleitor(ContextoSistema ctx) {
+        this.ctx = ctx;
+    }
+
+    public void exibir() {
+        Auxi.clearTerminal();
         while (true) {
-            
             System.out.println("======== MENU ========\n");
             System.out.println(
-                "[1] - Votar\n" +
-                "[2] - Voltar ao login\n" +
-                "[0] - Sair do programa\n");        
-    // @formatter:on
+                    "[1] - Votar\n" +
+                            "[2] - Voltar ao login\n" +
+                            "[0] - Sair do programa\n");
 
-            String strOpcao = scan.nextLine();
+            String strOpcao = ctx.scan.nextLine();
 
-            if (!util.isValidInt(strOpcao)) {
-                util.fixError("Digite apenas números");
-                util.clearRange(10, "a");
+            if (!Auxi.isValidInt(strOpcao)) {
+                Auxi.fixError("Digite apenas números");
+                Auxi.clearRange(10, "a");
                 continue;
             }
 
             switch (Integer.parseInt(strOpcao)) {
 
                 case 1 -> {
-                    if (eleitor.getJaVotou()) {
-                        util.fixError("ERRO! Você não pode votar duas vezes");
-                        util.clearRange(10, "a");
+                    if (ctx.eleitor.getJaVotou()) {
+                        Auxi.fixError("ERRO! Você não pode votar duas vezes");
+                        Auxi.clearRange(10, "a");
                         continue;
-                    } else if (candidatos.getList().isEmpty() || !eleicao.isAtiva()) {
-                        util.fixError("Eleição desativada ou sem candidatos cadastrados até o momento");
-                        util.clearRange(10, "a");
+                    } else if (ctx.listaCandidatos.getList().isEmpty() || !ctx.eleicao.isAtiva()) {
+                        Auxi.fixError("Eleição desativada ou sem candidatos cadastrados até o momento");
+                        Auxi.clearRange(10, "a");
                         continue;
                     } else {
-                        new MenuVotacao(scan, eleitor, candidatos, votacao, eleicao);
+                        ctx.exibirMenuVotacao();
                     }
                 }
 
-                case 2 -> new Login(scan, eleitores, candidatos, eleicao, votacao, cargos);
+                case 2 -> ctx.exibirMenuLogin();
 
                 case 0 -> System.out.println("Saindo...");
 
                 default -> {
-                    util.fixError("Opção inválida");
-                    util.clearRange(10, "a");
+                    Auxi.fixError("Opção inválida");
+                    Auxi.clearRange(10, "a");
                 }
 
             }
