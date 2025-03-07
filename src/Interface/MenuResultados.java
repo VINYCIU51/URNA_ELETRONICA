@@ -1,11 +1,11 @@
 package Interface;
 
+import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import auxiliares.*;
 import cargo.Cargo;
 import resultados.*;
-import resultados.proporcional.*;
 import usuarios.*;
 
 public class MenuResultados {
@@ -28,23 +28,41 @@ public class MenuResultados {
                 Candidato vencedor = majoritario.vencedor(cargo.getCargo());
 
                 if (vencedor != null) {
-                    System.out.println(
-                            cargo.getCargo() + ": " + vencedor.getNome() + " (" + vencedor.getVotos() + " votos).");
+                    Auxi.printBold("\n" + cargo.getCargo().toUpperCase() + ": ");
+                    System.out.print(vencedor.getNome() + " (" + vencedor.getVotos() + " votos)\n");
                 }
-            }
+                /*
+                 * else {
+                 * Auxi.printBold("\n" + cargo.getCargo().toUpperCase() + ": ");
+                 * System.out.print("Nenhum vencedor encontrado.");
+                 */}
         }
 
         // Exibição dos vencedores de votações proporcionais
-        VencedorProporcional proporcional = new VencedorProporcional(ctx.listaCandidatos);
+        Proporcional proporcional = new Proporcional();
         for (Cargo cargo : ctx.listaCargos.getList().values()) {
             if (cargo.getTipo().equals("proporcional")) {
-                proporcional.exibir(cargo.getCargo(), cargo.getVagas());
+                List<Candidato> eleitos = proporcional.calcularVencedores(cargo.getCargo(), cargo.getVagas(),
+                        ctx.listaCandidatos);
+
+                if (!eleitos.isEmpty()) {
+                    Auxi.printBold("\n" + cargo.getCargo().toUpperCase() + ":\n");
+                    for (Candidato eleito : eleitos) {
+                        System.out.println(" - " + eleito.getNome() + " (" + eleito.getVotos() + " votos)\n");
+                    }
+                } /*
+                   * else {
+                   * Auxi.printBold("\n" + cargo.getCargo().toUpperCase() + ": ");
+                   * System.out.print("Nenhum candidato eleito.");
+                   * }
+                   */
             }
         }
 
         // Exibindo data e hora
         LocalDateTime agora = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern("dd/MM/yyyy HH:mm:ss");
         System.out.println("\n\nRelatório feito em: " + agora.format(formatter));
 
         Auxi.pressEnter(ctx.scan);

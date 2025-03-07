@@ -12,10 +12,10 @@ public class ListaCargos {
 
     public ListaCargos() {
         // criacao de cargos majoritarios
-        Cargo presidente = new Cargo("presidente", "majoritário", 2, 1);
-        Cargo governador = new Cargo("governador", "majoritário", 2, 1);
-        Cargo prefeito = new Cargo("prefeito", "majoritário", 2, 1);
-        Cargo senador = new Cargo("senador", "majoritário", 3, 1);
+        Cargo presidente = new Cargo("presidente", "majoritario", 2, 1);
+        Cargo governador = new Cargo("governador", "majoritario", 2, 1);
+        Cargo prefeito = new Cargo("prefeito", "majoritario", 2, 1);
+        Cargo senador = new Cargo("senador", "majoritario", 3, 1);
 
         // Cargos proporcionais (com várias vagas)
         Cargo deputadoFederal = new Cargo("deputado federal", "proporcional", 4, 3); // 513 na vida real

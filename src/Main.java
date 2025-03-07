@@ -30,11 +30,11 @@ public class Main {
         eleitores.add(teste);
         Candidato joao = new Candidato("joao", "presidente", "pr", 12);
         candidatos.add(joao);
-        Candidato paulo = new Candidato("paulo", "deputado", "pr", 15);
+        Candidato paulo = new Candidato("paulo", "deputado federal", "pr", 15);
         candidatos.add(paulo);
-        Candidato pietro = new Candidato("pietro", "deputado", "pr", 16);
+        Candidato pietro = new Candidato("pietro", "deputado estadual", "pr", 16);
         candidatos.add(pietro);
-        Candidato corsa = new Candidato("corsa", "deputado", "pc", 17);
+        Candidato corsa = new Candidato("corsa", "vereador", "pc", 17);
         candidatos.add(corsa);
 
         contexto.exibirMenuLogin();

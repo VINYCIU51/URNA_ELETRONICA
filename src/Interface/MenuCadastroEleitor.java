@@ -5,10 +5,10 @@ import auxiliares.*;
 
 public class MenuCadastroEleitor {
 
-    private ContextoSistema ctx; // Agora usamos apenas o contexto
+    private ContextoSistema ctx;
 
     public MenuCadastroEleitor(ContextoSistema ctx) {
-        this.ctx = ctx; // Recebe o contexto diretamente
+        this.ctx = ctx;
     }
 
     public void exibir() {
@@ -19,7 +19,7 @@ public class MenuCadastroEleitor {
         String nome;
         while (true) {
             Auxi.printBold("NOME: ");
-            nome = ctx.scan.nextLine(); // Usando ctx.scan
+            nome = ctx.scan.nextLine();
 
             if (Auxi.hasInvalidSpace(nome)) {
                 Auxi.fixError("Uso inválido de espaços vazios");
@@ -35,7 +35,7 @@ public class MenuCadastroEleitor {
         int idade = 0;
         while (true) {
             Auxi.printBold("IDADE: ");
-            String strIdade = ctx.scan.nextLine(); // Usando ctx.scan
+            String strIdade = ctx.scan.nextLine();
 
             if (!Auxi.isValidInt(strIdade)) {
                 Auxi.fixError("Digite apenas números");
@@ -56,11 +56,11 @@ public class MenuCadastroEleitor {
         String cpf;
         while (true) {
             Auxi.printBold("CPF: ");
-            cpf = ctx.scan.nextLine(); // Usando ctx.scan
+            cpf = ctx.scan.nextLine();
 
             if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}")) {
                 Auxi.fixError("Digite no formato 000.000.000-00");
-            } else if (ctx.listaEleitores.getList().containsKey(cpf)) { // Usando ctx.listaEleitores
+            } else if (ctx.listaEleitores.getList().containsKey(cpf)) {
                 Auxi.fixError("CPF já cadastrado");
             } else {
                 Auxi.fixedError();
@@ -72,7 +72,7 @@ public class MenuCadastroEleitor {
         String senha;
         while (true) {
             Auxi.printBold("SENHA: ");
-            senha = ctx.scan.nextLine(); // Usando ctx.scan
+            senha = ctx.scan.nextLine();
 
             if (Auxi.hasInvalidSpace(senha)) {
                 Auxi.fixError("Uso inválido de espaços vazios");
@@ -84,9 +84,9 @@ public class MenuCadastroEleitor {
 
         // CRIACAO E ADIÇÃO À LISTA
         Eleitor eleitor = new Eleitor(nome, idade, cpf, senha);
-        ctx.listaEleitores.add(eleitor); // Usando ctx.listaEleitores
+        ctx.listaEleitores.add(eleitor);
         Auxi.printBold("\nCadastro efetuado com sucesso!");
-        Auxi.pressEnter(ctx.scan); // Usando ctx.scan
+        Auxi.pressEnter(ctx.scan);
         Auxi.clearTerminal();
     }
 }

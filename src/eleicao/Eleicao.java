@@ -11,17 +11,17 @@ public class Eleicao {
         this.ativa = false;
     }
 
-    // INICIA A ELEICAO PARA RECEBER VOTOS
+    // Ativa a eleição
     public void iniciar() {
         this.ativa = true;
     }
 
-    // FINALIZA A VOTACAO, NAO PERMITIDO MAIS VOTOS
+    // Finaliza a eleição, negando novos votos
     public void finalizar() {
         this.ativa = false;
     }
 
-    // DEFINE UM HORARIO PARA O TERMINO DA VOTACAO
+    // Define um horário para o termino da eleição
     public void definirHorarioTermino(String horario) {
         horarioTermino = LocalTime.parse(horario, DateTimeFormatter.ofPattern("HH:mm"));
     }
@@ -30,7 +30,7 @@ public class Eleicao {
         return horarioTermino;
     }
 
-    // VERIFICA SE A VOTACAO ESTA ATIVA OU NAO
+    // Verifica se a eleição está ativa
     public boolean isAtiva() {
         return ativa && (horarioTermino == null || LocalTime.now().isBefore(horarioTermino));
     }

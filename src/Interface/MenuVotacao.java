@@ -68,9 +68,12 @@ public class MenuVotacao {
                 // Loop de confirmação do voto
                 boolean votoConfirmado = false;
                 while (!votoConfirmado) {
-                    System.out.print("Confirmar voto "
-                            + (tipoVoto.equalsIgnoreCase("valido") ? ("em " + candidato.getNome()) : tipoVoto)
-                            + "? [s/n]: ");
+                    // Verifica se o voto é válido antes de acessar candidato.getNome()
+                    String mensagemConfirmacao = tipoVoto.equalsIgnoreCase("valido")
+                            ? "em " + candidato.getNome()
+                            : tipoVoto;
+
+                    System.out.print("Confirmar voto " + mensagemConfirmacao + "? [s/n]: ");
 
                     String confirmacao = ctx.scan.nextLine();
                     if (confirmacao.equalsIgnoreCase("s")) {
@@ -85,7 +88,9 @@ public class MenuVotacao {
 
                 // Computa o voto se confirmado
                 if (votoConfirmado) {
-                    candidato.addVoto();
+                    if (candidato != null) {
+                        candidato.addVoto(); // Adiciona voto apenas se o candidato não for nulo
+                    }
                     ctx.votacao.contabilizarVoto(tipoVoto);
                     ctx.eleitor.setJaVotou();
                     cargosVotados.add(cargoAtual);

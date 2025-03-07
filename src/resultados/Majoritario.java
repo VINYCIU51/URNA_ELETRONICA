@@ -10,11 +10,12 @@ public class Majoritario {
         this.listaCandidatos = listaCandidatos;
     }
 
+    // Método para calcular os vencedores de eleições majoritárias
     public Candidato vencedor(String cargo) {
         Candidato vencedor = null;
         int maxVotos = 0;
 
-        // PERCORRE TODOS OS CANDIDATOS DA LISTA E RETORNA O QUE TIVER MAIS VOTOS
+        // percorre todos os candidatos da lista e retorna o com mais votos
         for (Candidato candidato : listaCandidatos.getList().values()) {
             if (candidato.getCargo().equalsIgnoreCase(cargo)) {
                 if (candidato.getVotos() > maxVotos) {
