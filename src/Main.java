@@ -31,13 +31,13 @@ public class Main {
 
         // ========== ADICAO DE CANDIDATOS PARA EFETUAR OS TESTES =============
 
-        // Presidentes
+        // presidentes
         Candidato joao = new Candidato("Joao", "presidente", "PR", 12);
         candidatos.add(joao);
         Candidato maria = new Candidato("Maria", "presidente", "PT", 13);
         candidatos.add(maria);
 
-        // Deputados Federais
+        // deputados federais
         Candidato paulo = new Candidato("Paulo", "deputado federal", "PR", 1234);
         candidatos.add(paulo);
         Candidato ana = new Candidato("Ana", "deputado federal", "PSDB", 5678);
@@ -47,7 +47,7 @@ public class Main {
         Candidato carla = new Candidato("Carla", "deputado federal", "PSOL", 67890);
         candidatos.add(carla);
 
-        // Vereadores
+        // vereadores
         Candidato corsa = new Candidato("Corsa", "vereador", "PC", 12345);
         candidatos.add(corsa);
         Candidato lucas = new Candidato("Lucas", "vereador", "PV", 67890);
