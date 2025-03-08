@@ -1,7 +1,7 @@
 package usuarios;
 
+// Classe responsável por representar o candidato
 public class Candidato {
-
     private String cargo;
     private String nome;
     private String partido;
@@ -40,8 +40,7 @@ public class Candidato {
         this.votos++;
     }
 
-    // RETORNA AS INFORMACOES DO CANDIDATO FORMATADAS COM BASE NOS PARAMETROS
-    // PEDIDOS
+    // Retorna as informacoes do candidato com base nos parâmetros passados
     public String toString(String... campos) {
         StringBuilder sb = new StringBuilder();
 

@@ -2,8 +2,8 @@ package votacao;
 
 import eleicao.Eleicao;
 
+// Classe responsável por administrar os votos
 public class Votacao {
-
     private int votoBranco;
     private int votoNulo;
     private int votosValidos;

@@ -3,9 +3,9 @@ package registros;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
 import cargo.Cargo;
 
+// Classe responsável por guardar os cargos válidos
 public class ListaCargos {
 
     private Map<String, Cargo> cargos = new HashMap<>();

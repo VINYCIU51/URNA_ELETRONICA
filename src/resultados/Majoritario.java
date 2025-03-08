@@ -3,6 +3,7 @@ package resultados;
 import usuarios.Candidato;
 import registros.ListaCandidatos;
 
+// Classe responsável por retornar um vencedor da votação majoritária
 public class Majoritario {
     private ListaCandidatos listaCandidatos;
 

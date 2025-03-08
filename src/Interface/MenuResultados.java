@@ -8,6 +8,7 @@ import cargo.Cargo;
 import resultados.*;
 import usuarios.*;
 
+// Classe responsável por permitir ver os resultados da eleição
 public class MenuResultados {
     private ContextoSistema ctx;
 
@@ -15,7 +16,6 @@ public class MenuResultados {
         this.ctx = ctx;
     }
 
-    // Método para exibir os resultados
     public void exibir() {
         Auxi.clearTerminal();
         System.out.println("========== RESULTADOS ===========\n");
@@ -59,7 +59,7 @@ public class MenuResultados {
             }
         }
 
-        // Exibindo data e hora
+        // Exibindo data e hora do relatório
         LocalDateTime agora = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter
                 .ofPattern("dd/MM/yyyy HH:mm:ss");

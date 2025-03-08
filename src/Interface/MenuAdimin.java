@@ -2,8 +2,8 @@ package Interface;
 
 import auxiliares.*;
 
+// Classe do menu principal do usuário admin
 public class MenuAdimin {
-
     private ContextoSistema ctx;
 
     public MenuAdimin(ContextoSistema ctx) {
@@ -12,8 +12,7 @@ public class MenuAdimin {
 
     public void exibir() {
         Auxi.clearTerminal();
-        while (true) {
-
+        while (ctx.isProgramaAtivo()) {
             System.out.println("======== MENU ========\n");
             System.out.println(
                     "[1] - Cadastrar candidato\n" +
@@ -32,13 +31,13 @@ public class MenuAdimin {
                 continue;
             }
 
-            switch (Integer.parseInt(strOpcao)) {
+            int opcao = Integer.parseInt(strOpcao);
 
+            // Chamada dos outros menus
+            switch (opcao) {
                 case 1 -> ctx.exibirMenuCadastroCandidato();
-
                 case 2 -> ctx.exibirMenuCadastroEleitor();
-
-                case 3 -> {
+                case 3 -> { // Verifica se a eleiçao está ativa e se o eleitor esta apto a votar
                     if (ctx.eleitor.getJaVotou()) {
                         Auxi.fixError("ERRO! Você não pode votar duas vezes");
                         Auxi.clearRange(10, "a");
@@ -51,18 +50,15 @@ public class MenuAdimin {
                         ctx.exibirMenuVotacao();
                     }
                 }
-
                 case 4 -> ctx.exibirMenuConfigEleicao();
-
                 case 5 -> ctx.exibirMenuResultados();
-
                 case 6 -> ctx.exibirMenuLogin();
-
                 case 0 -> {
+                    Auxi.fixedError();
                     System.out.println("Saindo...");
+                    ctx.encerrarPrograma();
                     return;
                 }
-
                 default -> {
                     Auxi.fixError("Opção inválida");
                     Auxi.clearRange(10, "a");
@@ -70,5 +66,4 @@ public class MenuAdimin {
             }
         }
     }
-
 }

@@ -3,6 +3,7 @@ package eleicao;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+// Classe responsável por criar a eleição e administrala
 public class Eleicao {
     private boolean ativa;
     private LocalTime horarioTermino = null;

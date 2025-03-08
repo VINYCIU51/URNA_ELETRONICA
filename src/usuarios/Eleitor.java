@@ -1,5 +1,6 @@
 package usuarios;
 
+// Classe responsável por representar o eleitor
 public class Eleitor {
     private String nome;
     private int idade;
@@ -38,7 +39,7 @@ public class Eleitor {
         this.jaVotou = true;
     }
 
-    // RETORNA TODAS AS INFORMACOES DO ELEITOR COM BASE NOS PARAMETROS PEDIDOS
+    // Retorna as informações do eleitor com base nos parâmetros passados
     public String toString(String... campos) {
         StringBuilder sb = new StringBuilder();
 

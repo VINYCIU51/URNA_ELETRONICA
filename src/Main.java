@@ -24,18 +24,40 @@ public class Main {
 
         ContextoSistema contexto = new ContextoSistema(scan, eleitores, candidatos, eleicao, votacao, cargos);
 
-        Eleitor admin = new Eleitor("admin", 20, "12345", "123");
+        Eleitor admin = new Eleitor("admin", 20, "123.123.123-12", "12345");
         eleitores.add(admin);
-        Eleitor teste = new Eleitor("teste", 20, "123.123.123-12", "123");
+        Eleitor teste = new Eleitor("teste", 20, "000.000.000-00", "123");
         eleitores.add(teste);
-        Candidato joao = new Candidato("joao", "presidente", "pr", 12);
+
+        // ========== ADICAO DE CANDIDATOS PARA EFETUAR OS TESTES =============
+
+        // Presidentes
+        Candidato joao = new Candidato("Joao", "presidente", "PR", 12);
         candidatos.add(joao);
-        Candidato paulo = new Candidato("paulo", "deputado federal", "pr", 15);
+        Candidato maria = new Candidato("Maria", "presidente", "PT", 13);
+        candidatos.add(maria);
+
+        // Deputados Federais
+        Candidato paulo = new Candidato("Paulo", "deputado federal", "PR", 1234);
         candidatos.add(paulo);
-        Candidato pietro = new Candidato("pietro", "deputado estadual", "pr", 16);
+        Candidato ana = new Candidato("Ana", "deputado federal", "PSDB", 5678);
+        candidatos.add(ana);
+        Candidato pietro = new Candidato("Pietro", "deputado federal", "PR", 12345);
         candidatos.add(pietro);
-        Candidato corsa = new Candidato("corsa", "vereador", "pc", 17);
+        Candidato carla = new Candidato("Carla", "deputado federal", "PSOL", 67890);
+        candidatos.add(carla);
+
+        // Vereadores
+        Candidato corsa = new Candidato("Corsa", "vereador", "PC", 12345);
         candidatos.add(corsa);
+        Candidato lucas = new Candidato("Lucas", "vereador", "PV", 67890);
+        candidatos.add(lucas);
+        Candidato fernanda = new Candidato("Fernanda", "vereador", "PDT", 54321);
+        candidatos.add(fernanda);
+        Candidato roberto = new Candidato("Roberto", "vereador", "MDB", 98765);
+        candidatos.add(roberto);
+
+        // =========================== APAGAR DEPOIS =========================
 
         contexto.exibirMenuLogin();
 

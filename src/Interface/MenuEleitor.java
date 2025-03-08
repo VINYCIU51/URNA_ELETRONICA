@@ -2,8 +2,8 @@ package Interface;
 
 import auxiliares.*;
 
+// Classe responsável por mostrar o menu do usuário comum(eleitor)
 public class MenuEleitor {
-
     private ContextoSistema ctx;
 
     public MenuEleitor(ContextoSistema ctx) {
@@ -12,12 +12,12 @@ public class MenuEleitor {
 
     public void exibir() {
         Auxi.clearTerminal();
-        while (true) {
+        while (ctx.isProgramaAtivo()) {
             System.out.println("======== MENU ========\n");
             System.out.println(
                     "[1] - Votar\n" +
                             "[2] - Voltar ao login\n" +
-                            "[0] - Sair do programa\n");
+                            "[0] - Sair do programa");
 
             String strOpcao = ctx.scan.nextLine();
 
@@ -29,7 +29,7 @@ public class MenuEleitor {
 
             switch (Integer.parseInt(strOpcao)) {
 
-                case 1 -> {
+                case 1 -> { // Verifica se a eleiçao está ativa e se o eleitor esta apto a votar
                     if (ctx.eleitor.getJaVotou()) {
                         Auxi.fixError("ERRO! Você não pode votar duas vezes");
                         Auxi.clearRange(10, "a");
@@ -45,7 +45,12 @@ public class MenuEleitor {
 
                 case 2 -> ctx.exibirMenuLogin();
 
-                case 0 -> System.out.println("Saindo...");
+                case 0 -> {
+                    Auxi.fixedError();
+                    System.out.println("Saindo...");
+                    ctx.encerrarPrograma();
+                    return;
+                }
 
                 default -> {
                     Auxi.fixError("Opção inválida");

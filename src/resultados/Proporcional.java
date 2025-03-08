@@ -4,6 +4,7 @@ import java.util.*;
 import usuarios.Candidato;
 import registros.ListaCandidatos;
 
+// Classe responsável por determinar os vencedores de votações proporcionais 
 public class Proporcional {
 
     // Método para calcular os vencedores de eleições proporcionais

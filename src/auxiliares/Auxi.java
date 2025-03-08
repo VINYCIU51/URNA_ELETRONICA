@@ -2,6 +2,7 @@ package auxiliares;
 
 import java.util.Scanner;
 
+// Classe responsavel por disponibilizar metodos para locomoção pelo terminal e de verificações utilizadas
 public class Auxi {
 
     // Limpa o terminal
@@ -19,6 +20,7 @@ public class Auxi {
         }
     }
 
+    // Limpa o terminal até uma determinada distância
     public static void clearRange(int range, String direction) {
         for (int i = 0; i < range; i++) {
             System.out.print("\033[K"); // Limpa a linha atual
@@ -55,7 +57,7 @@ public class Auxi {
         return texto.matches(".*\\d.*");
     }
 
-    // Verifica se a string é composta por apenas numeros( melhoria do hasNextint )
+    // Verifica se a string é composta por apenas numeros( melhoria do hasNextInt )
     public static boolean isValidInt(String numero) {
         return numero.matches("^\\d+$");
     }

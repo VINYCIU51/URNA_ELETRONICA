@@ -3,9 +3,14 @@ package Interface;
 import usuarios.Eleitor;
 import auxiliares.*;
 
+// Classe responsável por permitir o cadastro de um eleitor
 public class MenuCadastroEleitor {
-
     private ContextoSistema ctx;
+
+    // Constantes para validação
+    private static final int IDADE_MINIMA = 16;
+    private static final int IDADE_MAXIMA = 120;
+    private static final String FORMATO_CPF = "\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}";
 
     public MenuCadastroEleitor(ContextoSistema ctx) {
         this.ctx = ctx;
@@ -15,24 +20,47 @@ public class MenuCadastroEleitor {
         Auxi.clearTerminal();
         System.out.println("===== CADASTRO DE ELEITORES =====\n");
 
-        // PEDIDO DE NOME
-        String nome;
+        // Validação do nome
+        String nome = validarNome();
+
+        // Validação da idade
+        int idade = validarIdade();
+
+        // Validação do CPF
+        String cpf = validarCPF();
+
+        // Validação da senha
+        String senha = validarSenha();
+
+        // Criação do eleitor e adição à lista
+        Eleitor eleitor = new Eleitor(nome, idade, cpf, senha);
+        ctx.listaEleitores.add(eleitor);
+
+        // Mensagem de sucesso
+        Auxi.printBold("\n✅ Cadastro efetuado com sucesso!");
+        Auxi.pressEnter(ctx.scan);
+        Auxi.clearTerminal();
+    }
+
+    private String validarNome() {
         while (true) {
             Auxi.printBold("NOME: ");
-            nome = ctx.scan.nextLine();
+            String nome = ctx.scan.nextLine();
 
-            if (Auxi.hasInvalidSpace(nome)) {
+            if (nome.trim().isEmpty()) {
+                Auxi.fixError("O nome não pode ser vazio");
+            } else if (Auxi.hasInvalidSpace(nome)) {
                 Auxi.fixError("Uso inválido de espaços vazios");
             } else if (Auxi.hasNum(nome)) {
                 Auxi.fixError("Digite apenas letras");
             } else {
                 Auxi.fixedError();
-                break;
+                return nome;
             }
         }
+    }
 
-        // PEDIDO DE IDADE
-        int idade = 0;
+    private int validarIdade() {
         while (true) {
             Auxi.printBold("IDADE: ");
             String strIdade = ctx.scan.nextLine();
@@ -42,51 +70,46 @@ public class MenuCadastroEleitor {
                 continue;
             }
 
-            idade = Integer.parseInt(strIdade);
+            int idade = Integer.parseInt(strIdade);
 
-            if (idade < 16 || idade > 120) {
-                Auxi.fixError("Idade inválida");
+            if (idade < IDADE_MINIMA || idade > IDADE_MAXIMA) {
+                Auxi.fixError("Idade inválida. Deve ser entre " + IDADE_MINIMA + " e " + IDADE_MAXIMA + " anos");
             } else {
                 Auxi.fixedError();
-                break;
+                return idade;
             }
         }
+    }
 
-        // PEDIDO DE CPF
-        String cpf;
+    private String validarCPF() {
         while (true) {
             Auxi.printBold("CPF: ");
-            cpf = ctx.scan.nextLine();
+            String cpf = ctx.scan.nextLine();
 
-            if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}")) {
-                Auxi.fixError("Digite no formato 000.000.000-00");
+            if (!cpf.matches(FORMATO_CPF)) {
+                Auxi.fixError("Digite no formato 000.000.000-00 (com pontos e traço)");
             } else if (ctx.listaEleitores.getList().containsKey(cpf)) {
                 Auxi.fixError("CPF já cadastrado");
             } else {
                 Auxi.fixedError();
-                break;
+                return cpf;
             }
         }
+    }
 
-        // PEDIDO DE SENHA
-        String senha;
+    private String validarSenha() {
         while (true) {
             Auxi.printBold("SENHA: ");
-            senha = ctx.scan.nextLine();
+            String senha = ctx.scan.nextLine();
 
-            if (Auxi.hasInvalidSpace(senha)) {
+            if (senha.length() < 6) {
+                Auxi.fixError("A senha deve ter pelo menos 6 caracteres");
+            } else if (Auxi.hasInvalidSpace(senha)) {
                 Auxi.fixError("Uso inválido de espaços vazios");
-                continue;
+            } else {
+                Auxi.fixedError();
+                return senha;
             }
-            Auxi.fixedError();
-            break;
         }
-
-        // CRIACAO E ADIÇÃO À LISTA
-        Eleitor eleitor = new Eleitor(nome, idade, cpf, senha);
-        ctx.listaEleitores.add(eleitor);
-        Auxi.printBold("\nCadastro efetuado com sucesso!");
-        Auxi.pressEnter(ctx.scan);
-        Auxi.clearTerminal();
     }
 }

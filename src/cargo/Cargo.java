@@ -1,5 +1,6 @@
 package cargo;
 
+// Classe responsavel por criar e e manusear atributos do cargo
 public class Cargo {
 
     private String cargo;

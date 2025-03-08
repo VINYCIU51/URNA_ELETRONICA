@@ -7,7 +7,7 @@ import registros.*;
 import votacao.Votacao;
 import Interface.*;
 
-// Classe responsavel por passar todo o necessario para o sistema
+// Classe responsavel por passar todo o necessario para o sistema.
 // Evitando o acumulo de parâmetros
 public class ContextoSistema {
 
@@ -22,6 +22,7 @@ public class ContextoSistema {
     public Votacao votacao;
 
     // Menus
+    private boolean programaAtivo = true;
     public MenuLogin menuLogin;
     public MenuEleitor menuEleitor;
     public MenuCadastroCandidato menuCadastroCandidato;
@@ -90,5 +91,13 @@ public class ContextoSistema {
     // Método para atualizar o eleitor
     public void setEleitor(Eleitor eleitor) {
         this.eleitor = eleitor;
+    }
+
+    public boolean isProgramaAtivo() {
+        return programaAtivo;
+    }
+
+    public void encerrarPrograma() {
+        this.programaAtivo = false;
     }
 }
